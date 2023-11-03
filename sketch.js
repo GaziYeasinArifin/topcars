@@ -13,7 +13,7 @@ function setup() {
     let topSpeed = row.getNum('Top Speed (mph)');
     let acceleration = row.getNum('0-60 mph (seconds)');
     let manufacturer = row.getString('Manufacturer');
-    let diameter = map(topSpeed, 0, 350, 30, 250); // Slightly larger bubbles
+    let diameter = map(topSpeed, 0, 350, 30, 250);
     let x, y;
     do {
       x = random(width);
@@ -29,7 +29,7 @@ function draw() {
   for (let bubble of bubbles) {
     bubble.crossfade();
     bubble.display();
-    bubble.move(bubbles); // Pass the array of bubbles for collision detection
+    bubble.move(bubbles); 
   }
 }
 
@@ -53,9 +53,9 @@ class Bubble {
     this.acceleration = acceleration;
     this.manufacturer = manufacturer;
     this.fade = random(255);
-    this.fadeStep = random(1, 5); // Slower color change
+    this.fadeStep = random(1, 5); 
     this.angle = random(TWO_PI);
-    this.speed = random(0.2, 2); // Slower movement
+    this.speed = random(0.2, 2); 
   }
 
   crossfade() {
@@ -85,19 +85,18 @@ class Bubble {
     let dx = cos(this.angle) * this.speed;
     let dy = sin(this.angle) * this.speed;
 
-    // Check for collisions with other bubbles
+
     for (let other of allBubbles) {
       if (other !== this) {
         let d = dist(this.x + dx, this.y + dy, other.x, other.y);
         if (d < (this.diameter + other.diameter) / 2) {
-          // Change direction upon collision
+
           this.angle = random(TWO_PI);
-          break; // Exit the loop after the first collision
+          break; 
         }
       }
     }
 
-    // Check for collisions with the screen edges
     if (this.x - this.diameter / 2 <= 0 || this.x + this.diameter / 2 >= width) {
       this.angle = PI - this.angle;
     }
@@ -106,7 +105,6 @@ class Bubble {
       this.angle = -this.angle;
     }
 
-    // Update the position
     this.x += cos(this.angle) * this.speed;
     this.y += sin(this.angle) * this.speed;
   }
